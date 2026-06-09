@@ -1,11 +1,12 @@
-create table video_meta_result (
-    id integer auto_increment primary key,-- 행 자체의 고유 ID (대리키).
-    video_id integer not null unique,
-    fps float not null, -- 초당 프레임수
-    total_frames integer not null,-- 영상 전체 프레임 수
-    num_sampled integer not null,-- [1단계] 분석을 위해 샘플링한 프레임 수
-    num_extracted integer not null,-- [2단계] 샘플 중 얼굴 추출에 성공한 프레임 수
-    num_detected integer not null,-- [3단계] 추출된 얼굴 중 딥페이크 score 산출에 성공한 프레임 수
-
-    index video_id_idx(video_id)-- video_id로 메타 조회 시 사용
+create table video_frame_result (
+    id integer auto_increment primary key, -- 행 자체의 고유 ID (대리키)
+    video_id integer not null, 
+    frame_index integer not null, -- 영상 내 프레임 순번.
+    frame_time float not null, -- 영상 내 타임스탬프(초)
+    score float not null,-- 해당 프레임의 딥페이크 의심 점수 (0.0~1.0)
+    face_conf float not null,-- 얼굴 검출 신뢰도. 낮으면 score 신뢰도도 낮음.
+    face_ratio float not null,-- 프레임 대비 얼굴 면적 비율 (0.0~1.0)
+    face_brightness float not null,-- 얼굴 영역 평균 밝기 (조도 품질 지표)
+    
+    index video_id_idx(video_id)
 );
