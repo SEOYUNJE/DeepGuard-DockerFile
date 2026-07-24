@@ -1,0 +1,55 @@
+[mysqld]
+# Character Set & Collation (UTF-8 for Korean support)
+character-set-server=utf8mb4
+collation-server=utf8mb4_unicode_ci
+skip-character-set-client-handshake
+
+# Timezone
+default-time-zone='+09:00'
+
+# InnoDB settings (default storage engine)
+default-storage-engine=InnoDB
+innodb_buffer_pool_size=256M
+innodb_log_file_size=100M
+innodb_file_per_table=ON
+innodb_flush_log_at_trx_commit=2
+
+# Connection settings
+max_connections=500
+max_allowed_packet=256M
+connect_timeout=10
+interactive_timeout=28800
+wait_timeout=28800
+
+# Query cache disabled (deprecated in MySQL 8.0+)
+# query_cache_type=0
+
+# Logging
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow-query.log
+long_query_time=2
+log_queries_not_using_indexes=1
+
+# General query log (disable for production performance)
+general_log=0
+general_log_file=/var/log/mysql/general.log
+
+# Binary logging (for replication/backup)
+log_bin=mysql-bin
+binlog_format=ROW
+expire_logs_days=7
+
+# Error logging
+log_error=/var/log/mysql/error.log
+
+# Performance schema (monitoring - can disable if not needed)
+performance_schema=ON
+
+[mysql]
+default-character-set=utf8mb4
+
+[mysqldump]
+default-character-set=utf8mb4
+quick
+quote-names
+max_allowed_packet=256M
